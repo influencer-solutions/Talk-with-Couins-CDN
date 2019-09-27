@@ -1,247 +1,198 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width">
-	<title>Blubrry Player</title>
-	    <link rel="stylesheet" href="https://player.blubrry.com/css/player.min.css?iozhx9" media="screen,projection" />
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-        <!-- oembed -->
-	<link rel="alternate" type="text/json+oembed" href="https://player.blubrry.com/?podcast_id=12559710?podcast_id=12559710&amp;target=oembed&amp;oembed=json">
-	
-	<link rel="iframely player"
-		type="text/html"
-		href="https://player.blubrry.com/?podcast_id=12559710?podcast_id=12559710&amp;target=iframely"
-		media="(height: )"
-		title="Blubrry Podcast Player" />
-	
-    <meta name="twitter:card" content="player" />
-    <meta name="twitter:title" content="Blubrry and PowerPress Player" />
-    <meta name="twitter:site" content="@blubrry" />
-    <meta name="twitter:url" content="https://www.podcastinsider.com" />
-    <meta name="twitter:description" content="Blubrry and PowerPress Player" />
-    <meta name="twitter:player" content="https://player.blubrry.com/?podcast_id=12559710?podcast_id=12559710&amp;target=twitter" />
-    <meta name="twitter:image" content="https://assets.blubrry.net/coverart/160/12589.jpg" />
+<div class="pcast-player">
+  <div class="pcast-player-controls">
+    <button class="pcast-play"><i class="fa fa-play"></i><span>Play</span></button>
+    <button class="pcast-pause"><i class="fa fa-pause"></i><span>Pause</span></button>
+    <button class="pcast-rewind"><i class="fa fa-fast-backward"></i><span>Rewind</span></button>
+    <span class="pcast-currenttime pcast-time">00:00</span>
+    <progress class="pcast-progress" value="0"></progress>
+    <span class="pcast-duration pcast-time">00:00</span>
+    <button class="pcast-speed">1x</button>
+    <button class="pcast-mute"><i class="fa fa-volume-up"></i><span>Mute/Unmute</span></button>
+  </div>
+  <audio src="https://s3.amazonaws.com/ShopTalk/080_rapidfire_19.mp3"></audio><a class="pcast-download" href="https://s3.amazonaws.com/ShopTalk/080_rapidfire_19.mp3" download>Download MP3</a>
+</div>
+<style>
+	body {
+  font-size: 0.925em;
+  padding: 3%;
+  
+  a { 
+    color: #09c; 
+    &:hover,
+    &:focus,
+    &:active {
+       color: #069;
+    }
+  }
+}
 
-    <!-- open graph -->
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="Blubrry and PowerPress Player" />
-    <meta property="og:description" content="Blubrry and PowerPress Player" />
-            <meta property="og:url" content="https://www.podcastinsider.com" />
-        <meta property="og:site_name" content="" />
-            <meta property="og:image" content="https://assets.blubrry.net/coverart/160/12589.jpg" />
+.visually-hidden {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    padding:0 !important;
+    border:0 !important;
+    height: 1px !important;
+    width: 1px !important;
+    overflow: hidden;
+}
+
+/* Pcast Player */
+.pcast-player {
+  
+  .pcast-player-controls {
+    box-sizing: border-box;
+    background: #000;
+    color: #fff;
+    font-size: 14px;
+    height: 42px;
+    overflow: hidden;
+    padding: 5px;
+  }  
+  
+  button {
+    background: #2a2a2a;
+    color: #fff;
+    border: 0;
+    border-radius: 2px;
+    padding: 5px;
+    line-height: 22px;
+    -webkit-appreance: none;
+    min-width: 32px;
     
-</head>
-<body>
+    span {
+      @extend .visually-hidden;
+    }
+  }
+  
+  progress {
+    height: 13px;
+    width: calc(100% - 281px);
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  }
+
+  progress[value]::-webkit-progress-bar {
+    background-color: #555;
+    border-radius: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+  }
+  
+  progress[value]::-webkit-progress-value  {
+    background: #fff; 
+  }
+  
+  .pcast-time {
+    display: inline-block;
+    font-size: 13px;
+    padding: 0 5px;
+    text-align: center;
+    width: 4em;
+  }
+  
+  .pcast-speed {
+    width: 2.5em;
+  }
+  
+  .pcast-download {
+    font-size: 12px;
+    margin-top: 0.5em;
+    display: inline-block;
+    color: black;
+    &:hover,
+    &:focus {
+      color: #666;
+    }
+  }
+}
+</style>
 <script>
-	var media_url = "https:\/\/media.blubrry.com\/powerpress_podcast\/b\/content.blubrry.com\/powerpress_podcast\/PPP_Ep_16_Angelo_4_8_16.mp3";
-	var podcast_link = "http:\/\/www.powerpresspodcast.com\/2016\/04\/08\/powerpress-blubrry-player\/";
-	var artwork_url = "https:\/\/assets.blubrry.net\/coverart\/160\/12589.jpg";
-	var time = "00:00:00";
-	var darkorlight = "light";
-	var colorarrkeys = [];
-	var colorarr = [];
-	var fontcolorarr = [];
-	var fontcolorkeys = [];
+	(function(){
+
+  var pcastPlayers = document.querySelectorAll('.pcast-player');
+  var speeds = [ 1, 1.5, 2, 2.5, 3 ]    
+  
+  for(i=0;i<pcastPlayers.length;i++) {
+    var player = pcastPlayers[i];
+    var audio = player.querySelector('audio');
+    var play = player.querySelector('.pcast-play');
+    var pause = player.querySelector('.pcast-pause');
+    var rewind = player.querySelector('.pcast-rewind');
+    var progress = player.querySelector('.pcast-progress');
+    var speed = player.querySelector('.pcast-speed');
+    var mute = player.querySelector('.pcast-mute');
+    var currentTime = player.querySelector('.pcast-currenttime');
+    var duration = player.querySelector('.pcast-duration');
+    
+    var currentSpeedIdx = 0;
+
+    pause.style.display = 'none';
+    
+    var toHHMMSS = function ( totalsecs ) {
+        var sec_num = parseInt(totalsecs, 10); // don't forget the second param
+        var hours   = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+        if (hours   < 10) {hours   = "0"+hours; }
+        if (minutes < 10) {minutes = "0"+minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        
+        var time = hours+':'+minutes+':'+seconds;
+        return time;
+    }
+    
+    audio.addEventListener('loadedmetadata', function(){
+      progress.setAttribute('max', Math.floor(audio.duration));
+      duration.textContent  = toHHMMSS(audio.duration);
+    });
+    
+    audio.addEventListener('timeupdate', function(){
+      progress.setAttribute('value', audio.currentTime);
+      currentTime.textContent  = toHHMMSS(audio.currentTime);
+    });
+    
+    play.addEventListener('click', function(){
+      this.style.display = 'none';
+      pause.style.display = 'inline-block';
+      pause.focus();
+      audio.play();
+    }, false);
+
+    pause.addEventListener('click', function(){
+      this.style.display = 'none';
+      play.style.display = 'inline-block';
+      play.focus();
+      audio.pause();
+    }, false);
+ 
+    rewind.addEventListener('click', function(){
+      audio.currentTime -= 30;
+    }, false);
+    
+    progress.addEventListener('click', function(e){
+      audio.currentTime = Math.floor(audio.duration) * (e.offsetX / e.target.offsetWidth);
+    }, false);
+
+    speed.addEventListener('click', function(){
+      currentSpeedIdx = currentSpeedIdx + 1 < speeds.length ? currentSpeedIdx + 1 : 0;
+      audio.playbackRate = speeds[currentSpeedIdx];
+      this.textContent  = speeds[currentSpeedIdx] + 'x';
+      return true;
+    }, false);
+
+    mute.addEventListener('click', function() {
+      if(audio.muted) {
+        audio.muted = false;
+        this.querySelector('.fa').classList.remove('fa-volume-off');
+        this.querySelector('.fa').classList.add('fa-volume-up');
+      } else {
+        audio.muted = true;
+        this.querySelector('.fa').classList.remove('fa-volume-up');
+        this.querySelector('.fa').classList.add('fa-volume-off');
+      }
+    }, false);
+  }
+})(this);
 </script>
-<!-- <script src="https://player.blubrry.com/js/bplayer-sm2.js"></script> -->
-    <div class="player">
-        <div class="bplayer-main-controls">
-            <div class="bplayer-artwork screen-only">
-                <img id="artwork" src="https://assets.blubrry.net/coverart/160/12589.jpg"
-				title="Blubrry and PowerPress Player"
-				alt="Blubrry and PowerPress Player" />
-            </div>
-            <div class="bplayer-controls" style="white-space:nowrap" data-loaded="0">
-                <div id="title" style="text-overflow: clip; max-width:88%;">
-                    <p id="podcast_title">Blubrry and PowerPress Player</p>
-                </div>
-<!--                <button type="button" id="btn-show-popover" class="btn btn-success" data-toggle="popover" data-content="TEST" data-placement="bottom">SHOW (TRIGGER: CLICK)</button>-->
-                <div class="dropdown button icon aboutplayer" id="mydropdown">
-                    <a style="color:#333333" href="#" data-toggle="popover" data-placement="left"
-                       data-content="Blubrry Player v1.0.10<br /> &copy; 2016 - 2019 Blubrry Podcasting" ><i class="bplayer-icon-more-vert  button-icon-i" title="About Player"></i></a>
-                </div>
-                <div class="sm2-bar-ui">
-                    <div class="bd sm2-main-controls">
-                        <div class="sm2-inline-element sm2-button-element">
-                            <div class="sm2-button-bd play">
-                                <i class="bplayer-icon-play play-pause icons" id="play" title="Play Pause"></i>
-                            </div>
-                        </div>
-                        <div class="sm2-inline-element sm2-inline-status">
-                            <div class="sm2-progress">
-                                <div class="sm2-row">
-                                    <div class="sm2-progress-bd">
-                                        <div class="sm2-progress-track">
-                                            <div class="sm2-progress-bar"></div>
-                                            <div class="sm2-progress-ball">
-                                                <div class="sm2-inline-time">
-                                                    <div class="time-elapsed">0:00</div>
-                                                    <div class="icon-overlay"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="sm2-inline-duration time-total">0:00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--sm2-bar-ui-->
-            </div><!--end of controls-->
-        </div> <!--end of bplayer main-->
-                        <div id="buttons-row">
-                                            <div class="button-section button-section-shownotes" title="Shownotes">
-                            <div class="button-primary button-primary-shownotes">
-                                <a role="button" class="button-icon" title="Shownotes"
-                                   href="http://www.powerpresspodcast.com/2016/04/08/powerpress-blubrry-player/" target="_blank"><i class="fas fa-sticky-note"></i> <span
-                                            class="button-icon-span" id="shownoteslabel">&nbsp;Shownotes</span></a>
-                            </div>
-                        </div>
-                        <div class="button-section button-section-download" title="Download">
-                            <div class="button-primary button-primary-download">
-                                <a role="button" class="button-icon" href="https://media.blubrry.com/powerpress_podcast/b/content.blubrry.com/powerpress_podcast/PPP_Ep_16_Angelo_4_8_16.mp3" title="Download"
-                                   download target="_top"><i class="fas fa-file-download"></i> <span
-                                            class="button-icon-span" id="downloadword">Download</span></a>
-                            </div>
-                            <div class="download-message">
-                                <h5>Please right-click the download link and choose "Save Link As..."</h5>
-                            </div>
-                        </div>
-                    
-                    <div class="button-section button-section-subscribe" title="Subscribe to Podcast">
-                        <div class="button-primary button-primary-subscribe">
-                            <a role="button" class="button-icon" title="Subscribe to Podcast"><i class="fas fa-rss"></i> <span
-                                        class="screen-only" id="subscribeword">Subscribe</span></a>
-                        </div>
-                        <div>
-                            <div class="button-secondary mycast">
-                                <a href="https://www.blubrry.com/powerpress_podcast/#mycast" title="Subscribe on Blubrry Podcasting"
-                                   target="_blank">
-                                    <img src="/fonts/svg/mycast-color.svg"/>
-                                </a>
-                            </div>
-                                                            <div class="button-secondary itunes">
-                                    <a href="https://itunes.apple.com/us/podcast/blubrry-powerpress-community/id430248099?ls=1&amp;mt=2" title="Subscribe on Apple Podcasts"
-                                       target="_blank"><i class="bplayer-icon-apple-podcasts blubrry-tooltip"
-                                                          data-placement="bottom"></i></a>
-                                </div>
-                                                        <div class="button-secondary android">
-                                <a href="http://subscribeonandroid.com/feeds.blubrry.com/feeds/powerpress_podcast.xml" title="Subscribe on Android"
-                                   target="_blank"><i class="bplayer-icon-android-rss blubrry-tooltip"
-                                                      data-placement="bottom"></i></a>
-                            </div>
-                            <div class="button-secondary email">
-                                <a href="http://subscribebyemail.com/feeds.blubrry.com/feeds/powerpress_podcast.xml" title="Subscribe by Email"
-                                   target="_blank"><i class="bplayer-icon-subscribe-by-email blubrry-tooltip"
-                                                      data-placement="bottom"></i></a>
-                            </div>
-                            <div class="button-secondary rss">
-                                <a href="https://feeds.blubrry.com/feeds/powerpress_podcast.xml" target="_blank" title="Podcast RSS Feed"><i
-                                            class="bplayer-icon-rss blubrry-tooltip" data-placement="bottom"></i></a>
-                            </div>
-                            <div class="button-secondary google">
-                                <a href="https://www.google.com/podcasts?feed=aHR0cHM6Ly9mZWVkcy5ibHVicnJ5LmNvbS9mZWVkcy9wb3dlcnByZXNzX3BvZGNhc3QueG1s" target="_blank" title="Subscribe on Google Podcasts">
-                                    <i class="bplayer-icon-google-podcasts blubrry-tooltip" data-placement="bottom"></i>
-                                </a>
-                            </div>
-
-                                                            <div class="button-secondary stitcher">
-                                    <a href="http://www.stitcher.com/podcast/mackenzie-bennett/powerpress-podcast?refid=stpr" target="_blank" title="Subscribe to Stitcher">
-                                        <i class="bplayer-icon-stitcher blubrry-tooltip" data-placement="bottom"></i>
-                                    </a>
-                                </div>
-                                                                <div class="button-secondary tunein">
-                                        <a href="http://tunein.com/radio/PowerPress-Podcast-p915328/" target="_blank" title="Subscribe to Tunein">
-                                            <i class="bplayer-icon-tunein blubrry-tooltip" data-placement="bottom"></i>
-                                        </a>
-                                    </div>
-                                                     </div>
-                    </div>
-                    <div class="button-section button-section-share" title="Share this Podcast">
-                        <div class="button-primary button-primary-share">
-                            <a role="button" class="button-icon"><i class="fas fa-share-alt"></i> <span
-                                        class="screen-only" id="shareword">Share</span></a>
-                        </div>
-                        <div>
-                            <div class="button-secondary twitter">
-                                <a href="http://twitter.com/home?status=Blubrry+and+PowerPress+Player http%3A%2F%2Fwww.powerpresspodcast.com%2F2016%2F04%2F08%2Fpowerpress-blubrry-player%2F" target="_blank" title="Twitter"><i
-                                            class="bplayer-icon-twitter blubrry-tooltip"
-                                            data-placement="bottom"></i></a>
-                            </div><!--
-                            <div class="button-secondary google-plus">
-                                <a href="https://plus.google.com/share?url=http%3A%2F%2Fwww.powerpresspodcast.com%2F2016%2F04%2F08%2Fpowerpress-blubrry-player%2F" target="_blank" title="Google+"><i
-                                            class="bplayer-icon-google-plus-new blubrry-tooltip"
-                                            data-placement="bottom"></i></a>
-                            </div>-->
-                            <div class="button-secondary facebook">
-                                <a href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwww.powerpresspodcast.com%2F2016%2F04%2F08%2Fpowerpress-blubrry-player%2F&amp;t=Blubrry+and+PowerPress+Player" target="_blank" title="Facebook"><i
-                                            class="bplayer-icon-facebook blubrry-tooltip"
-                                            data-placement="bottom"></i></a>
-                            </div>
-                            <div class="button-secondary linkedin">
-                                <a href="http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fwww.powerpresspodcast.com%2F2016%2F04%2F08%2Fpowerpress-blubrry-player%2F&amp;title=Blubrry+and+PowerPress+Player&amp;source=PowerPress+Podcast" target="_blank" title="LinkedIn"><i
-                                            class="bplayer-icon-linkedin blubrry-tooltip"
-                                            data-placement="bottom"></i></a>
-                            </div>
-                            <div class="button-secondary pinterest">
-                                <a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.powerpresspodcast.com%2F2016%2F04%2F08%2Fpowerpress-blubrry-player%2F&media=https://assets.blubrry.net/coverart/160/12589.jpg&description=Blubrry and PowerPress Player" target="_blank" title="Pinterest"><i
-                                            class="bplayer-icon-pinterest blubrry-tooltip" data-placement="bottom"></i></a>
-                            </div>
-                            <div class="button-secondary mail">
-                                <a href="mailto:?subject=PowerPress Podcast&amp;body=Link: http%3A%2F%2Fwww.powerpresspodcast.com%2F2016%2F04%2F08%2Fpowerpress-blubrry-player%2F" target="_blank" title="Email"><i
-                                            class="bplayer-icon-email blubrry-tooltip" data-placement="bottom"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div> <!--end of player-->
-<script>
-        function doSomething(myfunc, argsarr) {
-            switch (myfunc) {
-                case "colorButton" :
-                    changecolorlib.colorButton(argsarr[0], argsarr[1], argsarr[2]);
-                    break;
-                case "StylePlayer" :
-                    changecolorlib.StylePlayer(argsarr[0]);
-                    break;
-                case "restoreButtonstoDefault":
-                    changecolorlib.colorButton('shownotes', '#444444', false);
-                    changecolorlib.colorButton('shownotes', '#ffffff', true);
-                    changecolorlib.colorButton('download', '#003366', false);
-                    changecolorlib.colorButton('download', '#ffffff', true);
-                    changecolorlib.colorButton('subscribe', '#fb8c00', false);
-                    changecolorlib.colorButton('subscribe', '#ffffff', true);
-                    changecolorlib.colorButton('share', '#1976d2', false);
-                    changecolorlib.colorButton('share', '#ffffff', true);
-                    break;
-                case "position":
-                    changecolorlib.position(audio, argsarr[0] * 1000);
-                    break;
-            }
-        }
-
-
-        function receiveMessage(e) {
-            if (e.origin === "http://publish.blubrry.local" || e.origin === "http://publish.blubrry.biz" || e.origin === "https://publish.blubrry.com") {
-                var data = e.data;
-                data = JSON.parse(data);
-                var curfunc = data.func;
-                var args = data["args"];
-                doSomething(curfunc, args);
-            } else { // Asssume it is 
-				// It is not json, assume an integer where we can jump in seconds...
-				if( !isNaN(e.data)) {
-					changecolorlib.position(audio, e.data * 1000);
-					if (audio.playState === 0 || audio.paused === true) {
-						player.btnPlay.click();
-					}
-				}
-			}
-        }
-
-        window.addEventListener("message", receiveMessage, false);
-</script>
-<script src="https://player.blubrry.com/js/player.min.js?iozhxa77" defer></script>
-</body>
-</html>
